@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>A-Frame websocket Component</title>
+    <script src="../../dist/socket.io.js"></script>
+    <script>
+    var socket = io.connect('http://localhost');
+
+      socket.emit('controlComponent', { 'mainchain': 'strand' });
+  </script>
+  </head>
+  <body>
+    <form>
+    </form>
+  </body>
+</html>
