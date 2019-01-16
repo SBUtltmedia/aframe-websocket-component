@@ -339,22 +339,24 @@
 
             $('#glmol01_reload').click(function(ev) {
               var socket = io.connect('http://localhost');
-              var idHeader = "#" + this.id + '_';
-
-              //Uncaught SyntaxError: missing ) after argument list
-              socket.emit('controlComponent', {
+              var idHeader = "#glmol01_";
+              data = {
                 'color' : $(idHeader + 'color').val(),
                 'mainchain' : $(idHeader + 'mainchain').val(),
                 'base' : $(idHeader + 'base').val(),
-                'line' : $(idHeader + 'line').attr('checked') == 'checked',
-                'doNotSmoothen' : $(idHeader + 'doNotSmoothen').attr('checked') == 'checked',
+                'line' : $(idHeader + 'line').is(':checked'),
+                'doNotSmoothen' : $(idHeader + 'doNotSmoothen').is(':checked'),
                 'nb' : $(idHeader + 'nb').val(),
                 'hetatmMode' : $(idHeader + 'hetatm').val(),
-                'cell' : $(idHeader + 'cell').attr('checked') == 'checked',
-                'biomt' : $(idHeader + 'biomt').attr('checked') == 'checked',
-                'packing' : $(idHeader + 'packing').attr('checked') == 'checked',
-                'symopHetatms' : $(idHeader + 'symopHetatms').attr('checked') == 'checked'
-  });
+                'cell' : $(idHeader + 'cell').is(':checked'),
+                'biomt' : $(idHeader + 'biomt').is(':checked'),
+                'packing' : $(idHeader + 'packing').is(':checked'),
+                'symopHetatms' : $(idHeader + 'symopHetatms').is(':checked')
+              };
+              //console.log(data);
+              console.log(data);
+              //Uncaught SyntaxError: missing ) after argument list
+              socket.emit('controlComponent', data);
             });
 
             function loadFile() {

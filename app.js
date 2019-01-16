@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-
+var componentInfo={};
 server.listen(80);
 // WARNING: app.listen(80) will NOT work here!
 app.get('/', function (req, res) {
@@ -17,9 +17,10 @@ app.get('/controller', function (req, res) {
 // });
 app.use('/dist', express.static('dist'))
 io.on('connection', function (socket) {
-
+  io.emit('updateComponent', componentInfo);
   socket.on('controlComponent', function (data) {
     console.log('Received Control')
-      io.emit('updateComponent', data);
+    componentInfo = data;
+      io.emit('updateComponent', componentInfo);
   });
 });
