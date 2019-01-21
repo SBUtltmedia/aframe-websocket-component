@@ -342,12 +342,12 @@
               var idHeader = "#glmol01_";
               data = {
                 'color' : $(idHeader + 'color').val(),
-                'mainchain' : $(idHeader + 'mainchain').val(),
-                'base' : $(idHeader + 'base').val(),
+                'mainchain' : $(idHeader + 'showMainchain').is(':checked') ? $(idHeader + 'mainchain').val() : 'none',
+                'base' : $(idHeader + 'showBases').is(':checked') ? $(idHeader + 'base').val() : 'none',
                 'line' : $(idHeader + 'line').is(':checked'),
                 'doNotSmoothen' : $(idHeader + 'doNotSmoothen').is(':checked'),
-                'nb' : $(idHeader + 'nb').val(),
-                'hetatmMode' : $(idHeader + 'hetatm').val(),
+                'nb' : $(idHeader + 'showNonBonded').is(':checked') ? $(idHeader + 'nb').val() : 'none',
+                'hetatmMode' : $(idHeader + 'showHetatms').is(':checked') ? $(idHeader + 'hetatm').val() : 'none',
                 'cell' : $(idHeader + 'cell').is(':checked'),
                 'biomt' : $(idHeader + 'biomt').is(':checked'),
                 'packing' : $(idHeader + 'packing').is(':checked'),

@@ -10,17 +10,17 @@ app.get('/', function (req, res) {
 });
 
 app.get('/controller', function (req, res) {
-  res.sendFile(__dirname + '/examples/basic/aframeComponentControl.html');
+  res.sendFile(__dirname + '/examples/basic/controller.html');
 });
 // app.get('/dist/socket.io.js', function (req, res) {
 //   res.sendFile(__dirname + '/dist/socket.io.js');
 // });
 app.use('/dist', express.static('dist'))
 io.on('connection', function (socket) {
-  io.emit('updateComponent', componentInfo);
+  // io.emit('updateComponents', componentInfo);
   socket.on('controlComponent', function (data) {
-    console.log('Received Control')
+    console.log('Received Control',data);
     componentInfo = data;
-      io.emit('updateComponent', componentInfo);
+    io.emit('updateComponents', componentInfo);
   });
 });
