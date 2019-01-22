@@ -7,14 +7,14 @@
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="../../dist/aframe-websocket-component.min.js"></script>
     <script src="../../dist/aframe-glmol-component.min.js"></script>
-  <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
+    <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
-<script src="../../dist/socket.io.js"></script>
+    <script src="../../dist/socket.io.js"></script>
   </head>
   <body>
     <a-scene>
       <a-entity></a-entity>
-        <a-entity id="camera" glmol position="0 0 0" rotation="0 0 0" websocket="userType:controller" camera look-controls orbit-controls=" minDistance: .75; maxDistance: 1.5; initialPosition: 0 0 5"></a-entity>
+        <a-entity id="camera" glmol position="0 0 0" websocket="userType:controller" camera look-controls orbit-controls=" minDistance: .75; maxDistance: 1.5; initialPosition: 0 0 5"></a-entity>
     </a-scene>
 
     <!-- GitHub Corner. -->

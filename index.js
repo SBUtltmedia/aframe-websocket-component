@@ -32,15 +32,24 @@ AFRAME.registerComponent('websocket', {
     if (this.data.userType == "client") {
       this.socket.on('updateComponents', (attributeList) => {
         console.log("update", attributeList);
-
         for (i in attributeList) {
           var currentAttribute = attributeList[i];
+          if (i != "rotation" && i != "glmol" && i != "position") {
+            this.el.setAttribute('glmol', i, currentAttribute);
+          }
+          // if(function(){
+          //   for(j in this.el.getAttribute('glmol').components){
+          //     if(i == j.name)
+          //       return true;
+          //   }
+          //   return false;
+          // })
+          else {
+            this.el.setAttribute(i, currentAttribute);
+          }
 
-          console.log(i, currentAttribute)
-
-          this.el.setAttribute(i, currentAttribute);
+          //console.log(this.el);
           // if(i == 'rotation'){
-          //   console.log(this.el.rotation);
           //   this.el.rotation.set(
           //     THREE.Math.degToRad(attributeList[i].x),
           //     THREE.Math.degToRad(attributeList[i].y),
@@ -65,7 +74,9 @@ AFRAME.registerComponent('websocket', {
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
    */
-  update: function(oldData) {},
+  update: function(oldData) {
+    console.log("websocket is updating");
+  },
 
   /**
    * Called when a component is removed (e.g., via removeAttribute).
@@ -83,14 +94,13 @@ AFRAME.registerComponent('websocket', {
         this.deltaT = t;
         var needsChange = false;
         var sendList = {};
-
         for (i of this.el.attributes) {
           //var propArr=[];
           if (i.name != this.attrName && i.name != "id") {
             //var attributeProperties = {};
-            var currentAttributeProps = this.el.getAttribute(i.name)
+            var currentAttributeProps = this.el.getAttribute(i.name);
             for (j in currentAttributeProps) {
-              this.attributeList[i.name] = this.attributeList[i.name] || {}
+              this.attributeList[i.name] = this.attributeList[i.name] || {};
               if (Object.values(this.attributeList).length == 0 || this.attributeList[i.name][j] != currentAttributeProps[j]) {
                 sendList[i.name] = sendList[i.name] || {};
                 sendList[i.name][j] = currentAttributeProps[j];
@@ -161,3 +171,19 @@ AFRAME.registerComponent('websocket', {
    */
   play: function() {}
 });
+
+// AFRAME.registerComponent('rotation-reader', {
+//   tick: function(t) {
+//     if (this.data.userType == "controller") {
+//       if (t > this.deltaT + 900) {
+//         var rotation = this.el.getAttribute('rotation');
+//         console.log("I ran")
+//         if (this.attributeList['rotation'].x != rotation.x || this.attributeList['rotation'].y != rotation.y){
+//           this.attributeList['rotation'].x = rotation.x;
+//           this.attributeList['rotation'].x = rotation.x;
+//           this.socket.emit('controlComponent', rotation);
+//         }
+//       }
+//     }
+//   }
+// });

@@ -10,14 +10,16 @@ app.get('/', function (req, res) {
 });
 
 app.get('/controller', function (req, res) {
-  res.sendFile(__dirname + '/examples/basic/controller.html');
+  res.sendFile(__dirname + '/examples/basic/aframeComponentControl.html');
 });
 // app.get('/dist/socket.io.js', function (req, res) {
 //   res.sendFile(__dirname + '/dist/socket.io.js');
 // });
 app.use('/dist', express.static('dist'))
 io.on('connection', function (socket) {
-  // io.emit('updateComponents', componentInfo);
+  if(Object.keys(componentInfo).length != 0){
+    io.emit('updateComponents', componentInfo);
+  }
   socket.on('controlComponent', function (data) {
     console.log('Received Control',data);
     componentInfo = data;
