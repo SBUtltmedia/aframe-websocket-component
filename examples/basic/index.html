@@ -9,15 +9,16 @@
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
   <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
-  <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
   <script src="../../dist/socket.io.js"></script>
 </head>
 
 <body>
-  <a-scene>
-    <a-entity camera orbit-controls=" minDistance: .75; maxDistance: 1.5; initialPosition: 0 0 5"></a-entity>
-    <a-entity id="camera" glmol="" rotation="0 0 0" websocket></a-entity>
+  <a-scene class="aframeBox">
+    <a-camera look-at="#glmolId" look-controls="enabled: false"></a-camera>
+    <a-entity id="glmolId" position="0 0 0" look-controls drag-rotate-component glmol websocket></a-entity>
   </a-scene>
+
 
   <!-- GitHub Corner. -->
   <a href="https://github.com/SBUtltmedia/GLmol-A-Frame" class="github-corner">

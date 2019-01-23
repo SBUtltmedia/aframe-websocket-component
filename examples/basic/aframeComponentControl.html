@@ -7,6 +7,7 @@
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
   <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
   <script src="../../dist/socket.io.js"></script>
@@ -115,8 +116,8 @@
 
 <body>
   <a-scene embedded class="aframeBox">
-    <a-entity camera orbit-controls="minDistance: .75; maxDistance: 1.5; initialPosition: 0 0 5"></a-entity>
-    <a-entity id="glmolId" rotation="0 0 0"glmol websocket="userType:controller" rotation-reader></a-entity>
+    <a-camera look-at="#glmolId" look-controls="enabled: false"></a-camera>
+    <a-entity id="glmolId" position="0 0 0" look-controls drag-rotate-component glmol websocket="userType:controller"></a-entity>
   </a-scene>
 
 
@@ -342,7 +343,7 @@
   function addTab(tabId, height, zIndex) {
     $(tabId + ' .bottomTab').click(function() {
       $(tabId + ' .bottomTab').toggle(function() { //Closing
-        $(tabId).css('z-index', 100).animate({
+        $(tabId).css('z-index', zIndex).animate({
           bottom: '0px',
           height: '20px'
           //height : (window.innerWidth > 800) ? height : '600px'
@@ -354,7 +355,7 @@
           bottom: '0px',
           height: '400px'
         });
-        //$(tabId).show();
+        //
         $('.bottomTab').show();
       });
     })
