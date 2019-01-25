@@ -27,35 +27,18 @@ AFRAME.registerComponent('websocket', {
   init: function(evt) {
     this.sendList = {};
     this.deltaT = 0;
-    // this.attributeList = {};
     this.socket = io.connect('http://localhost');
-
+    this.rotationLock = true;
     if (this.data.userType == "client") {
       this.socket.on('updateComponents', (attributeList) => {
-
         if (this.data.userType == "client") {
-
           for (i in attributeList) {
             var currentAttribute = attributeList[i];
-
-            // var currentRotation = this.el.getAttribute('rotation');
-            // if (i == "rotation") {
-            //   if (currentRotation != currentAttribute) {
-            //     this.el.setAttribute(i, currentAttribute);
-            //   }
-            // } else {
-
-
-            // currentAttribute = currentAttribute || {};
-            //     console.log(i,j, currentAttribute[j])
             this.el.setAttribute(i, currentAttribute);
-
           }
-
         }
       })
     }
-
   },
 
   /**
@@ -76,39 +59,27 @@ AFRAME.registerComponent('websocket', {
    * Called on each scene tick.
    */
   tick: function(t) {
-
     if (this.data.userType == "controller") {
       if (t > this.deltaT + 10) {
         this.deltaT = t;
         var needsChange = false;
 
         for (i of this.el.attributes) {
-          console.log(i)
           if (i.name != this.attrName && i.name != "id") {
-            //var attributeProperties = {};
             var currentAttributeProps = this.el.getAttribute(i.name);
             this.sendList[i.name] = this.sendList[i.name] || {}
-
             for (j in currentAttributeProps) {
-
               if (this.sendList[i.name][j] !== currentAttributeProps[j]) {
                 if (typeof currentAttributeProps[j] != "function") {
                   this.sendList[i.name][j] = currentAttributeProps[j];
                 }
-                // if (i.name == 'rotation') {
-                //   if (sendList["rotation"].x != undefined && sendList["rotation"].y != undefined) {
-                //     needsChange = true;
-                //   }
-                // } else {
                 needsChange = true;
-                // }
               }
             }
           }
         }
         if (needsChange) {
           this.socket.emit('controlComponent', this.sendList);
-
           for (i in this.sendList) {
             var currentVar = this.sendList[i];
           }
@@ -167,19 +138,3 @@ AFRAME.registerComponent('drag-rotate-component', {
     }
   }
 });
-
-// AFRAME.registerComponent('rotation-reader', {
-//   tick: function(t) {
-//     if (this.data.userType == "controller") {
-//       if (t > this.deltaT + 900) {
-//         var rotation = this.el.getAttribute('rotation');
-//         console.log("I ran")
-//         if (this.attributeList['rotation'].x != rotation.x || this.attributeList['rotation'].y != rotation.y){
-//           this.attributeList['rotation'].x = rotation.x;
-//           this.attributeList['rotation'].x = rotation.x;
-//           this.socket.emit('controlComponent', rotation);
-//         }
-//       }
-//     }
-//   }
-// });

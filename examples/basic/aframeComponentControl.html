@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>A-Frame websocket Component</title>
@@ -8,7 +9,6 @@
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
   <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
-  <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
   <script src="../../dist/socket.io.js"></script>
   <style type="text/css">
@@ -115,9 +115,9 @@
 </head>
 
 <body>
-  <a-scene embedded class="aframeBox">
-    <a-camera  position="0 0 1"  look-controls="enabled: false"></a-camera>
-    <a-entity id="glmolId" rotation="0 0 0" position="0 0 0"  drag-rotate-component glmol websocket="userType:controller"></a-entity>
+  <a-scene embedded class="aframeBox" background="color: black">
+    <a-camera position="0 0 1" look-controls="enabled: false"></a-camera>
+    <a-entity id="glmolId" rotation="0 0 0" position="0 0 0" drag-rotate-component glmol websocket="userType:controller"></a-entity>
   </a-scene>
 
 
@@ -280,29 +280,12 @@
       <button id="glmol01_reload">
         Apply
       </button>
-      <button onClick="saveImage()">
-        Take screenshot
-      </button>
     </div>
-  </div>
 
-  <div style="position: absolute; color: white; right: 10px; bottom: 10px; z-index: 99; background-color: rgba(0, 0, 0, 0.65);">
-    <input type="radio" name="glmol01_mouseMode" value="0" checked>
-    Rotate
-    <br>
-    <input type="radio" name="glmol01_mouseMode" value="1">
-    Translate
-    <br>
-    <input type="radio" name="glmol01_mouseMode" value="2">
-    Zoom
-    <br>
-    <input type="radio" name="glmol01_mouseMode" value="3">
-    Slab
-    <br>
-    <br>
-    <button onClick="glmol01.doFunc(function(mol) {mol.zoomInto(mol.getAllAtoms());mol.show()});">
-      Reset view
-    </button>
+    <div style="position: absolute; color: white; right: 10px; bottom: 10px; z-index: 99; background-color: rgba(0, 0, 0, 0.65);">
+      <input type="checkbox" name="checkbox" checked>Lock camera<br>
+    </div>
+
   </div>
   <!--
         <div id="loading" style="border: 2px solid white; position: absolute; color: white; left: 10%; top: 10%; padding: 5px; z-index:101;">
@@ -335,29 +318,30 @@
 <script type="text/javascript">
   var sceneEl = document.querySelector('a-scene');
   var glmolAttr = document.querySelector('[glmol]').components.glmol.glmol;
+  var srcboxClicked = false;
+  var viewBoxClicked = false;
+  var infoboxClicked = false;
+  addTab('#glmol01_srcbox', '400px', srcboxClicked);
+  addTab('#glmol01_viewbox', '400px', viewBoxClicked);
+  addTab('#glmol01_infobox', '400px', infoboxClicked);
 
-  addTab('#glmol01_srcbox', '400px', 0);
-  addTab('#glmol01_viewbox', '400px', 1);
-  addTab('#glmol01_infobox', '400px', 2);
-
-  function addTab(tabId, height, zIndex) {
+  function addTab(tabId, height, clicked) {
     $(tabId + ' .bottomTab').click(function() {
-      $(tabId + ' .bottomTab').toggle(function() { //Closing
+      var zIndex = 1;
+      console.log(clicked);
+      if (clicked) {
         $(tabId).css('z-index', zIndex).animate({
           bottom: '0px',
           height: '20px'
           //height : (window.innerWidth > 800) ? height : '600px'
         });
-        //$(tabId).hide();
-        //$('.bottomTab').show();
-      }, function() { //Opening
+      } else {
         $(tabId).css('z-index', zIndex).animate({
           bottom: '0px',
           height: '400px'
         });
-        //
-        $('.bottomTab').show();
-      });
+      }
+      clicked = !clicked;
     })
 
   }
@@ -406,10 +390,22 @@
     reader.readAsText(file[0]);
   }
 
-  function saveImage() {
-    glmol01.show();
-    var imageURI = glmol01.renderer.domElement.toDataURL("image/png");
-    window.open(imageURI);
+  function download(query){
+    var socket = io.connect('http://localhost');
+    var el = document.querySelector('#glmolId');
+    data = {'molId': query};
+    el.setAttribute('glmol', data);
+    socket.emit('controlComponent', data);
   }
+
+  $('input[name=checkbox]').change(function(){
+    console.log("I ran");
+    if($(this).is(':checked')) {
+      global.rotationLock = true;
+    } else {
+      global.rotationLock = false;
+    }
+});
 </script>
+
 </html>
