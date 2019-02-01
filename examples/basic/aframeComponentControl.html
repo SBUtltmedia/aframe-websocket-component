@@ -8,6 +8,7 @@
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
+  <script src="../../dist/drag-rotate-component.js"></script>
   <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
   <script src="https://unpkg.com/aframe-environment-component@1.0.0/dist/aframe-environment-component.min.js"></script>
   <script src="../../dist/socket.io.js"></script>
@@ -93,6 +94,7 @@
 
     .insideTab {
       border: 1px solid white;
+      padding: 1%;
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.85);
@@ -126,34 +128,24 @@
     <div class="insideTab" style="overflow: auto;">
       <h1>About</h1>
       <p>
-        GLmol -- Molecular Viewer on WebGL/Javascript
+        GLmol -- Molecular Viewer on A-Frame/Socket.IO/Javascript
         <br>
-        Version 0.47 (20120827)
+        Version 1 (2019.02.1)
       </p>
       <p>
-        This program is written by biochem_fan and released under LGPL. Please visit <a href="http://webglmol.sfjp.jp/">my project page</a> for the details and source code distribution.
+        This program is written by <!-- biochem_fan -->biochem_fan and Dave Graff, and released under LGPL. Please visit <a href="https://github.com/SBUtltmedia/aframe-websocket-component">our project page</a> for the details and source code distribution.
       </p>
       <p>
-        Comments and Suggestions are welcome. Please mail to biochem_fan at users.sourceforge.jp or write in <a href="http://sourceforge.jp/projects/webglmol/forums/">the forum</a>.
+        Comments and Suggestions are welcome. Please email SBUtltmedia.
       </p>
       <h1>How to use</h1>
       <ul>
         <li>
-          Rotation: left button
+          Rotate: left mouse button
         </li>
         <li>
-          Translation: middle button or Ctrl-key + left button
-        </li>
-        <li>
-          Zoom: mousewheel or right button(up/down) or Shift-key + left button(up/down)
-        </li>
-        <li>
-          Slab: left button + Ctrl-key. horizontal move adjusts near clipping plane, vertical move far clipping plane.
-        </li>
+          Lock Camera: locks student camera to your view
       </ul>
-      <p>
-        You can also change mouse mode with radio buttons at right-bottom corner.
-      </p>
     </div>
   </div>
 
@@ -161,36 +153,27 @@
     <span class="bottomTab">Load</span>
     <div class="insideTab">
       You can load PDB, SDF/MOL(MDL not SYBYL) or XYZ files
-      <br>
-      -from local disk (don't worry. your file will not be uploaded),
-      <input id="glmol01_file" type="file" size=1>
-      <button onClick="loadFile()">
-        Load from file
-      </button>
-      <br>
-      -from RCSB PDB server,
+      <br><br><br>
+      From the RCSB PDB server
       PDBID:
       <input id="glmol01_pdbid" value="2POR" size=4>
       <button onClick="download('pdb:' + $('#glmol01_pdbid').val())">
         Download
       </button>
-      <br>
-      -from PubChem server,
+      <br><br>
+      From the PubChem server
       Compound ID(CID):
       <input id="glmol01_cid" value="2244" size=4>
       <button onClick="download('cid:' + $('#glmol01_cid').val())">
         Download
       </button>
-      <br>
-      <!-- CHECK: CSS nowrap is not working? -->
-      -or from the textarea below.
-      <br>
-      <!-- white-space: nowrap not only doesn't work in Firefox but also let Chrome reformatting continuous spaces!!! -->
-      <textarea wrap="off" id="glmol01_src" style="width: 100%; height: 8em; overflow:scroll;"></textarea>
-      <br>
-      <button onClick="glmol01.loadMolecule(); $('#loading').hide();">
-        Reload molecule from textarea
+      <br><br>
+      From your local disk:
+      <input id="glmol01_file" type="file" size=1>
+      <button onClick="loadFile()">
+        Load from file
       </button>
+      <br>(Don't worry, your file will not be uploaded)
     </div>
   </div>
 
@@ -316,6 +299,7 @@
   <div id="glmol01_pdbTitle" style="position:absolute; color: white; background-color: rgba(0, 0, 0, 0.65); font-size:80%"></div>
 </body>
 <script type="text/javascript">
+  var socket = io.connect('http://129.49.17.187');
   var sceneEl = document.querySelector('a-scene');
   var glmolAttr = document.querySelector('[glmol]').components.glmol.glmol;
   var srcboxClicked = false;
@@ -347,7 +331,7 @@
   }
 
   $('#glmol01_reload').click(function(ev) {
-    var socket = io.connect('http://localhost');
+
     var idHeader = "#glmol01_";
     data = {
       'color': $(idHeader + 'color').val(),
@@ -391,7 +375,7 @@
   }
 
   function download(query){
-    var socket = io.connect('http://localhost');
+
     var el = document.querySelector('#glmolId');
     data = {'molId': query};
     el.setAttribute('glmol', data);
@@ -399,11 +383,12 @@
   }
 
   $('input[name=checkbox]').change(function(){
-    console.log("I ran");
+
+    console.log("selection: ", $(this).is(':checked'));
     if($(this).is(':checked')) {
-      global.rotationLock = true;
+      socket.emit('controlComponent', {'freeRotation': false});
     } else {
-      global.rotationLock = false;
+      socket.emit('controlComponent', {'freeRotation': true});
     }
 });
 </script>

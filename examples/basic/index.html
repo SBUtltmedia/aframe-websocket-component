@@ -8,15 +8,16 @@
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
+  <script src="../../dist/drag-rotate-component.js"></script>
   <script src="https://unpkg.com/aframe-orbit-controls@1.2.0/dist/aframe-orbit-controls.min.js"></script>
-    <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-look-at-component@0.5.1/dist/aframe-look-at-component.min.js"></script>
   <script src="../../dist/socket.io.js"></script>
 </head>
 
 <body>
   <a-scene class="aframeBox" background="color: black">
     <a-camera position="0 0 1"  look-controls="enabled: false"></a-camera>
-    <a-entity id="glmolId" position="0 0 0" rotation="0 0 0"  drag-rotate-component glmol websocket></a-entity>
+    <a-entity id="glmolId" position="0 0 0" rotation="0 0 0" drag-rotate-component="enabled: false" glmol websocket></a-entity>
   </a-scene>
 
 

@@ -22,9 +22,6 @@ io.on('connection', function (socket) {
   }
   socket.on('controlComponent', function (data) {
     console.log('Received Control\n',data);
-    if(global.rotationLock == false){
-      delete data['rotation'];
-    }
     componentInfo = data;
     io.emit('updateComponents', componentInfo);
   });
