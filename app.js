@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var componentInfo={};
-server.listen(80);
+server.listen(8080);
 // WARNING: app.listen(80) will NOT work here!
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/examples/basic/index.html');

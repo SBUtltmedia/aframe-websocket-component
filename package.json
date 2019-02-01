@@ -60,7 +60,7 @@
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0",
     "snazzy": "^4.0.0",
-    "uglify-es": "github:mishoo/UglifyJS2#harmony",
+    "uglify-es": "^3.3.9",
     "webpack": "^2.7.0"
   },
   "semistandard": {
@@ -75,6 +75,6 @@
   },
   "dependencies": {
     "express": "^4.16.4",
-    "socket.io": "^2.2.0"
+    "socket.io": "*"
   }
 }

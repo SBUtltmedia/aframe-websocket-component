@@ -27,7 +27,7 @@ AFRAME.registerComponent('websocket', {
   init: function(evt) {
     this.sendList = {};
     this.deltaT = 0;
-    this.socket = io.connect('http://129.49.17.187');
+    this.socket = io();
     if (this.data.userType == "client") {
       this.el.setAttribute('freeRotation', false);
       this.socket.on('updateComponents', (attributeList) => {

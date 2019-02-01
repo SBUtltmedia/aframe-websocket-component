@@ -1,0 +1,130 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/dh/nodejs/bin/node', '/usr/bin/npm', 'install' ]
+2 info using npm@2.5.1
+3 info using node@v0.12.0
+4 verbose install where, deps [ '/home/tltmedia/glmol.fenetik.com',
+4 verbose install   [ 'express',
+4 verbose install     'socket.io',
+4 verbose install     'aframe',
+4 verbose install     'browserify',
+4 verbose install     'budo',
+4 verbose install     'chai',
+4 verbose install     'chai-shallow-deep-equal',
+4 verbose install     'ghpages',
+4 verbose install     'karma',
+4 verbose install     'karma-browserify',
+4 verbose install     'karma-chai-shallow-deep-equal',
+4 verbose install     'karma-chrome-launcher',
+4 verbose install     'karma-env-preprocessor',
+4 verbose install     'karma-firefox-launcher',
+4 verbose install     'karma-mocha',
+4 verbose install     'karma-mocha-reporter',
+4 verbose install     'karma-sinon-chai',
+4 verbose install     'mocha',
+4 verbose install     'nodemon',
+4 verbose install     'randomcolor',
+4 verbose install     'semistandard',
+4 verbose install     'shelljs',
+4 verbose install     'shx',
+4 verbose install     'sinon',
+4 verbose install     'sinon-chai',
+4 verbose install     'snazzy',
+4 verbose install     'uglify-es',
+4 verbose install     'webpack' ] ]
+5 verbose install where, peers [ '/home/tltmedia/glmol.fenetik.com', [] ]
+6 info preinstall aframe-websocket-component@1.0.0
+7 verbose already installed skipping karma@^0.13.15 /home/tltmedia/glmol.fenetik.com
+8 verbose already installed skipping karma-browserify@^4.4.2 /home/tltmedia/glmol.fenetik.com
+9 verbose already installed skipping karma-chai-shallow-deep-equal@0.0.4 /home/tltmedia/glmol.fenetik.com
+10 verbose already installed skipping karma-chrome-launcher@2.0.0 /home/tltmedia/glmol.fenetik.com
+11 verbose already installed skipping karma-env-preprocessor@^0.1.1 /home/tltmedia/glmol.fenetik.com
+12 verbose already installed skipping karma-firefox-launcher@^0.1.7 /home/tltmedia/glmol.fenetik.com
+13 verbose already installed skipping karma-mocha@^0.2.1 /home/tltmedia/glmol.fenetik.com
+14 verbose already installed skipping karma-mocha-reporter@^1.1.3 /home/tltmedia/glmol.fenetik.com
+15 verbose already installed skipping karma-sinon-chai@^1.1.0 /home/tltmedia/glmol.fenetik.com
+16 verbose already installed skipping mocha@^2.3.4 /home/tltmedia/glmol.fenetik.com
+17 verbose already installed skipping nodemon@^1.18.9 /home/tltmedia/glmol.fenetik.com
+18 verbose already installed skipping randomcolor@^0.4.4 /home/tltmedia/glmol.fenetik.com
+19 verbose already installed skipping semistandard@^8.0.0 /home/tltmedia/glmol.fenetik.com
+20 verbose already installed skipping shelljs@^0.7.0 /home/tltmedia/glmol.fenetik.com
+21 verbose already installed skipping shx@^0.1.1 /home/tltmedia/glmol.fenetik.com
+22 verbose already installed skipping sinon@^1.17.5 /home/tltmedia/glmol.fenetik.com
+23 verbose already installed skipping sinon-chai@^2.8.0 /home/tltmedia/glmol.fenetik.com
+24 verbose already installed skipping snazzy@^4.0.0 /home/tltmedia/glmol.fenetik.com
+25 verbose already installed skipping uglify-es@* /home/tltmedia/glmol.fenetik.com
+26 verbose already installed skipping webpack@^2.7.0 /home/tltmedia/glmol.fenetik.com
+27 verbose already installed skipping express@^4.16.4 /home/tltmedia/glmol.fenetik.com
+28 verbose already installed skipping socket.io@^2.2.0 /home/tltmedia/glmol.fenetik.com
+29 verbose already installed skipping aframe@* /home/tltmedia/glmol.fenetik.com
+30 verbose already installed skipping browserify@^13.0.0 /home/tltmedia/glmol.fenetik.com
+31 verbose already installed skipping budo@^8.2.2 /home/tltmedia/glmol.fenetik.com
+32 verbose already installed skipping chai@^3.4.1 /home/tltmedia/glmol.fenetik.com
+33 verbose already installed skipping chai-shallow-deep-equal@^1.3.0 /home/tltmedia/glmol.fenetik.com
+34 verbose already installed skipping ghpages@^0.0.8 /home/tltmedia/glmol.fenetik.com
+35 silly install resolved []
+36 info build /home/tltmedia/glmol.fenetik.com
+37 verbose linkStuff [ false, false, false, '/home/tltmedia' ]
+38 info linkStuff aframe-websocket-component@1.0.0
+39 verbose linkBins aframe-websocket-component@1.0.0
+40 verbose linkMans aframe-websocket-component@1.0.0
+41 verbose rebuildBundles aframe-websocket-component@1.0.0
+42 verbose rebuildBundles [ '.bin',
+42 verbose rebuildBundles   'aframe',
+42 verbose rebuildBundles   'browserify',
+42 verbose rebuildBundles   'budo',
+42 verbose rebuildBundles   'chai',
+42 verbose rebuildBundles   'chai-shallow-deep-equal',
+42 verbose rebuildBundles   'express',
+42 verbose rebuildBundles   'ghpages',
+42 verbose rebuildBundles   'karma',
+42 verbose rebuildBundles   'karma-browserify',
+42 verbose rebuildBundles   'karma-chai-shallow-deep-equal',
+42 verbose rebuildBundles   'karma-chrome-launcher',
+42 verbose rebuildBundles   'karma-env-preprocessor',
+42 verbose rebuildBundles   'karma-firefox-launcher',
+42 verbose rebuildBundles   'karma-mocha',
+42 verbose rebuildBundles   'karma-mocha-reporter',
+42 verbose rebuildBundles   'karma-sinon-chai',
+42 verbose rebuildBundles   'mocha',
+42 verbose rebuildBundles   'nodemon',
+42 verbose rebuildBundles   'randomcolor',
+42 verbose rebuildBundles   'semistandard',
+42 verbose rebuildBundles   'shelljs',
+42 verbose rebuildBundles   'shx',
+42 verbose rebuildBundles   'sinon',
+42 verbose rebuildBundles   'sinon-chai',
+42 verbose rebuildBundles   'snazzy',
+42 verbose rebuildBundles   'socket.io',
+42 verbose rebuildBundles   'uglify-es',
+42 verbose rebuildBundles   'webpack' ]
+43 info install aframe-websocket-component@1.0.0
+44 info postinstall aframe-websocket-component@1.0.0
+45 info prepublish aframe-websocket-component@1.0.0
+46 verbose unsafe-perm in lifecycle true
+47 info aframe-websocket-component@1.0.0 Failed to exec prepublish script
+48 verbose stack Error: aframe-websocket-component@1.0.0 prepublish: `npm run dist`
+48 verbose stack Exit status 1
+48 verbose stack     at EventEmitter.<anonymous> (/usr/local/dh/nodejs/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
+48 verbose stack     at EventEmitter.emit (events.js:110:17)
+48 verbose stack     at ChildProcess.<anonymous> (/usr/local/dh/nodejs/lib/node_modules/npm/lib/utils/spawn.js:14:12)
+48 verbose stack     at ChildProcess.emit (events.js:110:17)
+48 verbose stack     at maybeClose (child_process.js:1008:16)
+48 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:1080:5)
+49 verbose pkgid aframe-websocket-component@1.0.0
+50 verbose cwd /home/tltmedia/glmol.fenetik.com
+51 error Linux 3.14.52-vs2.3.6.15-1
+52 error argv "/usr/local/dh/nodejs/bin/node" "/usr/bin/npm" "install"
+53 error node v0.12.0
+54 error npm  v2.5.1
+55 error code ELIFECYCLE
+56 error aframe-websocket-component@1.0.0 prepublish: `npm run dist`
+56 error Exit status 1
+57 error Failed at the aframe-websocket-component@1.0.0 prepublish script 'npm run dist'.
+57 error This is most likely a problem with the aframe-websocket-component package,
+57 error not with npm itself.
+57 error Tell the author that this fails on your system:
+57 error     npm run dist
+57 error You can get their info via:
+57 error     npm owner ls aframe-websocket-component
+57 error There is likely additional logging output above.
+58 verbose exit [ 1, true ]

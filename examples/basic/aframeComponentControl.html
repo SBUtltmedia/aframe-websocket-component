@@ -247,18 +247,6 @@
       <input id="glmol01_symopHetatms" type="checkbox">
       Show HETATMs in symmetry mates (slower)
       <br>
-      Background color:
-      <select id="glmol01_bgcolor">
-        <option value="0xffffff">white</option>
-        <option selected="selected" value="0x000000">black</option>
-        <option value="0x888888">grey</option>
-      </select>
-      Projection:
-      <select id="glmol01_projection">
-        <option value="orthoscopic">orthoscopic</option>
-        <option selected="selected" value="perspective">perspective</option>
-      </select>
-      <br>
       <br>
       <button id="glmol01_reload">
         Apply
@@ -299,7 +287,7 @@
   <div id="glmol01_pdbTitle" style="position:absolute; color: white; background-color: rgba(0, 0, 0, 0.65); font-size:80%"></div>
 </body>
 <script type="text/javascript">
-  var socket = io.connect('http://129.49.17.187');
+  var socket = io();
   var sceneEl = document.querySelector('a-scene');
   var glmolAttr = document.querySelector('[glmol]').components.glmol.glmol;
   var srcboxClicked = false;
