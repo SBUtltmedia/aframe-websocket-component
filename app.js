@@ -10,7 +10,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/controller', function (req, res) {
-  res.sendFile(__dirname + '/examples/basic/aframeComponentControl.html');
+  res.sendFile(__dirname + '/examples/basic/control.html');
 });
 // app.get('/dist/socket.io.js', function (req, res) {
 //   res.sendFile(__dirname + '/dist/socket.io.js');
