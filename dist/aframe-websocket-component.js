@@ -105,12 +105,17 @@ AFRAME.registerComponent('websocket', {
     var room = prompt("Please enter a room", "Lobby");
     //var el = document.querySelector('#glmolId');
     this.data.roomId=room;
-    //this.el.setAttribute('websocket', data);
+    // this.el.setAttribute('websocket', data);
 
 
     this.sendList = {};
     this.deltaT = 0;
     this.socket = io();
+
+    if(location.pathname == "/controller"){
+      // this.el.setAttribute('glmol', 'userType', 'controller');
+      this.data.userType = "controller";
+    }
     if (this.data.userType == "client") {
 
       this.socket.on('updateComponents', (attributeList) => {
@@ -162,6 +167,7 @@ AFRAME.registerComponent('websocket', {
           }
         }
         if (needsChange) {
+          console.log(changedAttributes);
           this.socket.emit('controlComponent', changedAttributes);
         }
       }
