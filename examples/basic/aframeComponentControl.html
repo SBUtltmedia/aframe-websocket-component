@@ -341,7 +341,7 @@
       el.setAttribute('glmol', i, currentAttribute);
     }
     //Uncaught SyntaxError: missing ) after argument list
-    socket.emit('controlComponent', data);
+  //  socket.emit('controlComponent', data);
   });
 
   function loadFile() {
@@ -367,18 +367,23 @@
     var el = document.querySelector('#glmolId');
     data = {'molId': query};
     el.setAttribute('glmol', data);
-    socket.emit('controlComponent', data);
+  //  socket.emit('controlComponent', data);
   }
 
   $('input[name=checkbox]').change(function(){
+    var el = document.querySelector('#glmolId');
 
-    console.log("selection: ", $(this).is(':checked'));
-    if($(this).is(':checked')) {
-      socket.emit('controlComponent', {'freeRotation': false});
-    } else {
-      socket.emit('controlComponent', {'freeRotation': true});
-    }
+    el.setAttribute('websocket', data);
+    // console.log("selection: ", $(this).is(':checked'));
+    // if($(this).is(':checked')) {
+    //   socket.emit('controlComponent', {'freeRotation': false});
+    // } else {
+    //   socket.emit('controlComponent', {'freeRotation': true});
+    // }
 });
+
+
+
 </script>
 
 </html>

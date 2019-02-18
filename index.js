@@ -5,14 +5,19 @@ if (typeof AFRAME === 'undefined') {
 }
 
 /**
- * websocket component for A-Frame.
+ * websocket component for A-Frame
  */
 AFRAME.registerComponent('websocket', {
   schema: {
     userType: {
       type: 'string',
       default: 'client'
+    },
+    roomId: {
+      type: 'string',
+      default: 'lobby'
     }
+
 
   },
 
@@ -25,17 +30,22 @@ AFRAME.registerComponent('websocket', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function(evt) {
+    var room = prompt("Please enter a room", "Lobby");
+    //var el = document.querySelector('#glmolId');
+    this.data.roomId=room;
+    //this.el.setAttribute('websocket', data);
+
+
     this.sendList = {};
     this.deltaT = 0;
     this.socket = io();
     if (this.data.userType == "client") {
-      this.el.setAttribute('freeRotation', false);
+
       this.socket.on('updateComponents', (attributeList) => {
         for (i in attributeList) {
           var currentAttribute = attributeList[i];
           this.el.setAttribute(i, currentAttribute);
         }
-        this.el.setAttribute('drag-rotate-component', 'enabled', this.el.getAttribute('freeRotation'));
       });
     }
   },
@@ -45,7 +55,8 @@ AFRAME.registerComponent('websocket', {
    * Generally modifies the entity based on the data.
    */
   update: function(oldData) {
-    //console.log(oldData);
+    this.socket.emit("switchRoom", this.data);
+      console.log(oldData);
   },
 
   /**
@@ -64,7 +75,7 @@ AFRAME.registerComponent('websocket', {
         var needsChange = false;
         var changedAttributes = {};
         for (i of this.el.attributes) {
-          if (i.name != this.attrName && i.name != "id") {
+          if (i.name != "id") {
             var currentAttributeProps = this.el.getAttribute(i.name);
             this.sendList[i.name] = this.sendList[i.name] || {}
             for (j in currentAttributeProps) {
