@@ -104,7 +104,7 @@ AFRAME.registerComponent('websocket', {
   init: function(evt) {
     var room = prompt("Please enter a room", "Lobby");
     //var el = document.querySelector('#glmolId');
-    this.data.roomId=room;
+    this.data.roomId = room;
     // this.el.setAttribute('websocket', data);
 
 
@@ -112,12 +112,11 @@ AFRAME.registerComponent('websocket', {
     this.deltaT = 0;
     this.socket = io();
 
-    if(location.pathname == "/controller"){
+    if (location.pathname == "/controller") {
       // this.el.setAttribute('glmol', 'userType', 'controller');
       this.data.userType = "controller";
     }
     if (this.data.userType == "client") {
-
       this.socket.on('updateComponents', (attributeList) => {
         for (i in attributeList) {
           var currentAttribute = attributeList[i];
@@ -133,7 +132,7 @@ AFRAME.registerComponent('websocket', {
    */
   update: function(oldData) {
     this.socket.emit("switchRoom", this.data);
-      console.log(oldData);
+    console.log(oldData);
   },
 
   /**
@@ -156,8 +155,8 @@ AFRAME.registerComponent('websocket', {
             var currentAttributeProps = this.el.getAttribute(i.name);
             this.sendList[i.name] = this.sendList[i.name] || {}
             for (j in currentAttributeProps) {
-              if (this.sendList[i.name][j] !== currentAttributeProps[j]) {
-                if (typeof currentAttributeProps[j] != "function") {
+              if (typeof currentAttributeProps[j] != "function") {
+                if (this.sendList[i.name][j] !== currentAttributeProps[j]) {
                   this.sendList[i.name][j] = currentAttributeProps[j];
                   changedAttributes[i.name] = currentAttributeProps;
                   needsChange = true;

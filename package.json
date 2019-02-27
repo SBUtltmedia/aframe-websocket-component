@@ -6,7 +6,7 @@
   "unpkg": "dist/aframe-websocket-component.min.js",
   "scripts": {
     "build": "webpack index.js dist/aframe-websocket-component.js",
-    "dev": "nodemon --watch index.js --watch app.js --watch examples  --watch src --exec 'npm run dist && npm run startServer' ",
+    "dev": "nodemon --watch index.js --watch app.js --watch examples  --watch src --watch /Users/dgraff/Desktop/GLmol-A-Frame/dist/aframe-glmol-component.min.js --exec 'npm run dist && npm run startServer' ",
     "dist": "npm run build && uglifyjs dist/aframe-websocket-component.js > dist/aframe-websocket-component.min.js",
     "lint": "semistandard -v | snazzy",
     "prepublish": "npm run dist",
