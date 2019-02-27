@@ -361,32 +361,40 @@ console.log(location);
     controlPanel.style.display = "block";
   }else{
     controlPanel.style.display = "none";
+    this.el.setAttribute('drag-rotate-component', 'enabled', false);
   }
 
-  addTab('#glmol01_srcbox', '400px', srcboxClicked);
-  addTab('#glmol01_viewbox', '400px', viewBoxClicked);
-  addTab('#glmol01_infobox', '400px', infoboxClicked);
+  // addTab('#glmol01_srcbox', '400px', srcboxClicked);
+  // addTab('#glmol01_viewbox', '400px', viewBoxClicked);
+  // addTab('#glmol01_infobox', '400px', infoboxClicked);
 
-  function addTab(tabId, height, clicked) {
-    $(tabId + ' .bottomTab').click(function() {
-      var zIndex = 1;
-      console.log(clicked);
-      if (clicked) {
-        $(tabId).css('z-index', zIndex).animate({
-          bottom: '0px',
-          height: '20px'
-          //height : (window.innerWidth > 800) ? height : '600px'
-        });
-      } else {
-        $(tabId).css('z-index', zIndex).animate({
-          bottom: '0px',
-          height: '400px'
-        });
-      }
-      clicked = !clicked;
-    })
 
-  }
+    $('.bottomTab').click(function(evt) {
+
+
+  var parentId  =  $(evt.currentTarget).parent().parent()[0].id
+  $(“parentElement”).children().each(function(cur){
+
+console.log($(cur)[0].id)
+
+
+  })
+    //   if (clicked) {
+    //     $(tabId).css('z-index', 1).animate({
+    //       bottom: '0px',
+    //       height: '20px'
+    //       //height : (window.innerWidth > 800) ? height : '600px'
+    //     });
+    //   } else {
+    //     $(tabId).css('z-index', 1).animate({
+    //       bottom: '0px',
+    //       height: '400px'
+    //     });
+    //   }
+    //   clicked = !clicked;
+    // })
+
+  })
 
   $('#glmol01_reload').click(function(ev) {
 

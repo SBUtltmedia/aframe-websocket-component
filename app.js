@@ -17,17 +17,19 @@ app.get('/controller', function (req, res) {
 // });
 app.use('/dist', express.static('dist'))
 io.on('connection', function (socket) {
-  if(Object.keys(componentInfo).length != 0){
-    io.to(socket.room).emit('updateComponents', componentInfo);
-  }
+
+
+
+
   socket.on('controlComponent', function (data) {
     console.log('Received Control\n',data);
-    componentInfo = data;
-    io.to(socket.room).emit('updateComponents', componentInfo);
+    componentInfo[socket.room] = data;
+    io.to(socket.room).emit('updateComponents', componentInfo[socket.room] );
   });
   socket.on('switchRoom', function (data) {
     console.log('Switch Room\n',data);
     socket.join(data.roomId);
     socket.room = data.roomId;
+    io.to(socket.room).emit('updateComponents',  componentInfo[socket.room]);
   });
 });

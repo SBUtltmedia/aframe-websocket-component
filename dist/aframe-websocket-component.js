@@ -111,9 +111,10 @@ AFRAME.registerComponent('websocket', {
     this.sendList = {};
     this.deltaT = 0;
     this.socket = io();
-
+    this.socket.emit("switchRoom", this.data.roomId );
+    console.log(location.pathname)
     if (location.pathname == "/controller") {
-      // this.el.setAttribute('glmol', 'userType', 'controller');
+      this.el.setAttribute('glmol', 'userType', 'controller');
       this.data.userType = "controller";
     }
     if (this.data.userType == "client") {
