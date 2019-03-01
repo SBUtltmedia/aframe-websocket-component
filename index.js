@@ -30,26 +30,26 @@ AFRAME.registerComponent('websocket', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function(evt) {
-    var room = prompt("Please enter a room", "Lobby");
-    //var el = document.querySelector('#glmolId');
-    this.data.roomId = room;
-    // this.el.setAttribute('websocket', data);
-
-
+    if(!window.socket){
+      var room = prompt("Please enter a room", "Lobby");
+      this.data.roomId = room;
+      window.socket = io();
+    }
     this.sendList = {};
     this.deltaT = 0;
-    this.socket = io();
-    this.socket.emit("switchRoom", this.data.roomId );
-    console.log(location.pathname)
+    window.socket.emit("switchRoom", this.data.roomId );
     if (location.pathname == "/controller") {
-      this.el.setAttribute('glmol', 'userType', 'controller');
       this.data.userType = "controller";
     }
     if (this.data.userType == "client") {
-      this.socket.on('updateComponents', (attributeList) => {
-        for (i in attributeList) {
-          var currentAttribute = attributeList[i];
+      window.socket.on('updateComponents', (attributeList) => {
+        if(attributeList){
+        console.log(attributeList)
+        var elAttributeList=attributeList[this.el.id]||{}
+        for (i in elAttributeList) {
+          var currentAttribute = elAttributeList[i];
           this.el.setAttribute(i, currentAttribute);
+        }
         }
       });
     }
@@ -60,8 +60,8 @@ AFRAME.registerComponent('websocket', {
    * Generally modifies the entity based on the data.
    */
   update: function(oldData) {
-    this.socket.emit("switchRoom", this.data);
-    console.log(oldData);
+    window.socket.emit("switchRoom", this.data);
+
   },
 
   /**
@@ -81,6 +81,7 @@ AFRAME.registerComponent('websocket', {
         var changedAttributes = {};
         for (i of this.el.attributes) {
           if (i.name != "id") {
+
             var currentAttributeProps = this.el.getAttribute(i.name);
             this.sendList[i.name] = this.sendList[i.name] || {}
             for (j in currentAttributeProps) {
@@ -95,8 +96,9 @@ AFRAME.registerComponent('websocket', {
           }
         }
         if (needsChange) {
-          console.log(changedAttributes);
-          this.socket.emit('controlComponent', changedAttributes);
+          elKey={}
+          elKey[this.el.id]=changedAttributes;
+          window.socket.emit('controlComponent',elKey );
         }
       }
     }

@@ -23,7 +23,7 @@ io.on('connection', function (socket) {
 
   socket.on('controlComponent', function (data) {
     console.log('Received Control\n',data);
-    componentInfo[socket.room] = data;
+    componentInfo[socket.room] = Object.assign({}, componentInfo[socket.room], data);
     io.to(socket.room).emit('updateComponents', componentInfo[socket.room] );
   });
   socket.on('switchRoom', function (data) {
