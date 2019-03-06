@@ -12,9 +12,7 @@ app.get('/', function (req, res) {
 app.get('/controller', function (req, res) {
   res.sendFile(__dirname + '/examples/basic/control.html');
 });
-// app.get('/dist/socket.io.js', function (req, res) {
-//   res.sendFile(__dirname + '/dist/socket.io.js');
-// });
+
 app.use('/dist', express.static('dist'))
 io.on('connection', function (socket) {
 
@@ -26,7 +24,6 @@ io.on('connection', function (socket) {
     console.log('Switch Room\n',data);
     socket.join(data.roomId);
     socket.room = data.roomId;
-    //setTimeout(function(){
-    io.to(socket.room).emit('updateComponents',  componentInfo[socket.room]);//}, 1000)
+    io.to(socket.room).emit('updateComponents',  componentInfo[socket.room]);
   });
 });

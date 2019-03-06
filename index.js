@@ -33,7 +33,7 @@ AFRAME.registerComponent('websocket', {
     if(!window.socket){
       var room = prompt("Please enter a room", "Lobby");
       this.data.roomId = room;
-      window.socket = io("http://glmol.fenetik.com:8080");
+      window.socket = io();
     }
     this.sendList = {};
     this.deltaT = 0;
@@ -43,7 +43,6 @@ AFRAME.registerComponent('websocket', {
     }
     if (this.data.userType == "client") {
       window.socket.on('updateComponents', (attributeList) => {
-        console.log(attributeList);
         if(attributeList){
         var elAttributeList=attributeList[this.el.id]||{}
         for (i in elAttributeList) {
