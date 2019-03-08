@@ -47,7 +47,8 @@ AFRAME.registerComponent('websocket', {
         var elAttributeList=attributeList[this.el.id]||{}
         for (i in elAttributeList) {
           var currentAttribute = elAttributeList[i];
-          this.el.setAttribute(i, currentAttribute);
+          if(currentAttribute != null)
+            this.el.setAttribute(i, currentAttribute);
         }
         }
       });
