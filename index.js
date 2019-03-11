@@ -30,26 +30,32 @@ AFRAME.registerComponent('websocket', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function(evt) {
-    if(!window.socket){
-      var room = prompt("Please enter a room", "Lobby");
-      this.data.roomId = room;
-      window.socket = io();
+    if (!window.roomId) {
+      window.roomId = prompt("Please enter a room", "Lobby");
+      window.socketNum = 0;
+    } else {
+      window.socketNum++;
     }
+    this.socket = io();
+    this.socketNum = window.socketNum.toString();
+    this.roomId = window.roomId + this.socketNum;
+    this.roomId = this.roomId.toString();
     this.sendList = {};
     this.deltaT = 0;
-    window.socket.emit("switchRoom", this.data.roomId );
+    this.socket.emit("switchRoom", this.roomId);
     if (location.pathname == "/controller") {
       this.data.userType = "controller";
     }
     if (this.data.userType == "client") {
-      window.socket.on('updateComponents', (attributeList) => {
-        if(attributeList){
-        var elAttributeList=attributeList[this.el.id]||{}
-        for (i in elAttributeList) {
-          var currentAttribute = elAttributeList[i];
-          if(currentAttribute != null)
-            this.el.setAttribute(i, currentAttribute);
-        }
+      this.socket.on('updateComponents', (attributeList) => {
+        //console.log(attributeList)
+        if (attributeList) {
+          //var elAttributeList = attributeList[this.el.id] || {}
+          for (i in attributeList) {
+            var currentAttribute = attributeList[i];
+            if (currentAttribute != null)
+              this.el.setAttribute(i, currentAttribute);
+          }
         }
       });
     }
@@ -60,8 +66,7 @@ AFRAME.registerComponent('websocket', {
    * Generally modifies the entity based on the data.
    */
   update: function(oldData) {
-    window.socket.emit("switchRoom", this.data);
-
+    this.socket.emit("switchRoom", this.roomId);
   },
 
   /**
@@ -75,13 +80,12 @@ AFRAME.registerComponent('websocket', {
    */
   tick: function(t) {
     if (this.data.userType == "controller") {
-      if (t > this.deltaT + 100) {
+      if (t > this.deltaT + 200) {
         this.deltaT = t;
         var needsChange = false;
         var changedAttributes = {};
         for (i of this.el.attributes) {
           if (i.name != "id") {
-
             var currentAttributeProps = this.el.getAttribute(i.name);
             this.sendList[i.name] = this.sendList[i.name] || {}
             for (j in currentAttributeProps) {
@@ -96,9 +100,9 @@ AFRAME.registerComponent('websocket', {
           }
         }
         if (needsChange) {
-          elKey={}
-          elKey[this.el.id]=changedAttributes;
-          window.socket.emit('controlComponent',elKey );
+          //elKey={}
+          //elKey[this.roomId]=changedAttributes;
+          this.socket.emit('controlComponent', /*elKey*/ changedAttributes);
         }
       }
     }

@@ -18,12 +18,13 @@ io.on('connection', function (socket) {
 
   socket.on('controlComponent', function (data) {
     componentInfo[socket.room] = Object.assign({}, componentInfo[socket.room], data);
+    console.log("Data sent to", socket.room, data)
     io.to(socket.room).emit('updateComponents', componentInfo[socket.room] );
   });
   socket.on('switchRoom', function (data) {
     console.log('Switch Room\n',data);
-    socket.join(data.roomId);
-    socket.room = data.roomId;
+    socket.join(data);
+    socket.room = data;
     io.to(socket.room).emit('updateComponents',  componentInfo[socket.room]);
   });
 });
