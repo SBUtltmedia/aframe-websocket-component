@@ -166,6 +166,7 @@
   <a-scene class="aframeBox" background="color: black">
     <a-camera position="0 1.6 0" look-controls="enabled: false"></a-camera>
     <a-entity id="glmolId" position="0 1.5 -1" rotation="0 0 0" drag-rotate-component="enabled: true" glmol websocket></a-entity>
+    <a-sphere id="someSphere" websocket></a-sphere>
   </a-scene>
   <div id="showMolId"></div>
   <!-- GitHub Corner. -->
@@ -183,15 +184,13 @@
     <div class="tabBox" id="glmol01_infobox" style="left: 40%; z-index: 2;">
       <span class="bottomTab">About</span>
       <div class="insideTab">
-        <h1>About</h1>
         <p>
           GLmol -- Molecular Viewer on A-Frame/Socket.IO/Javascript
           <br>
           Version 1 (2019.02.1)
         </p>
         <p>
-          This program is written by
-          <!-- biochem_fan -->biochem_fan and Dave Graff, and released under LGPL. Please visit <a href="https://github.com/SBUtltmedia/aframe-websocket-component">our project page</a> for the details and source code distribution.
+          This program is written by biochem_fan, Bazal1, and Dave Graff, and released under LGPL. Please visit <a href="https://github.com/SBUtltmedia/aframe-websocket-component">our project page</a> for the details and source code distribution.
         </p>
         <p>
           Comments and Suggestions are welcome. Please email SBUtltmedia.
@@ -320,12 +319,18 @@
 </body>
 <script type="text/javascript">
   var el = document.querySelector('#glmolId');
+
   document.querySelector('a-scene').addEventListener('loaded', () => {
-    showMolId(el.getAttribute('glmol').molId)
+    showMolId(el.getAttribute('glmol').molId);
   });
+
+  attributeSetter('roomId', prompt("Please enter a room", "Lobby"));
+  console.log(document.querySelector('#glmolId').getAttribute('websocket').roomId);
+
   var controlPanel = document.getElementById("controlPanel");
   if (location.pathname === "/controller") {
     controlPanel.style.display = "block";
+    attributeSetter('userType', 'controller');
   } else {
     controlPanel.style.display = "none";
     this.el.setAttribute('drag-rotate-component', 'enabled', false);
@@ -347,8 +352,6 @@
     }
   })
 
-
-
   $('#glmol01_reload').click(function(ev) {
     var idHeader = "#glmol01_";
     data = {
@@ -364,7 +367,6 @@
       'packing': $(idHeader + 'packing').is(':checked'),
       'symopHetatms': $(idHeader + 'symopHetatms').is(':checked')
     };
-
 
     for (i in data) {
       var currentAttribute = data[i];
@@ -392,6 +394,11 @@
 
   function showMolId(molId) {
     $('#showMolId').html(molId);
+  }
+
+  function attributeSetter(type, result){
+    document.querySelector('#glmolId').setAttribute('websocket', type, result);
+    document.querySelector('#someSphere').setAttribute('websocket', type, result);
   }
 
   function download(query) {
