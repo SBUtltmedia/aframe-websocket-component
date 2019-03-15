@@ -7,7 +7,7 @@
   <meta name="description" content="Basic example for GLMol  component.">
   </meta>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
   <script src="../../dist/aframe-websocket-component.min.js"></script>
   <script src="../../dist/aframe-glmol-component.min.js"></script>
   <script src="../../dist/drag-rotate-component.js"></script>
@@ -47,7 +47,6 @@
       }
     }
   </style>
-
   <style type="text/css">
     html,
     body {
@@ -164,9 +163,9 @@
 </head>
 <body>
   <a-scene class="aframeBox" background="color: black">
-    <a-camera position="0 1.6 0" look-controls="enabled: false"></a-camera>
-    <a-entity id="glmolId" position="0 1.5 -1" rotation="0 0 0" drag-rotate-component="enabled: true" glmol websocket></a-entity>
-    <a-sphere id="someSphere" websocket></a-sphere>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+    <a-entity id="glmolId" position="0 0 -1" rotation="0 0 0" drag-rotate-component="enabled: true" glmol websocket="blacklist: drag-rotate-component;"></a-entity>
+
   </a-scene>
   <div id="showMolId"></div>
   <!-- GitHub Corner. -->
@@ -319,13 +318,13 @@
 </body>
 <script type="text/javascript">
   var el = document.querySelector('#glmolId');
+  console.log(document.querySelector('#glmolId').getAttribute('websocket'));
 
   document.querySelector('a-scene').addEventListener('loaded', () => {
     showMolId(el.getAttribute('glmol').molId);
   });
 
   attributeSetter('roomId', prompt("Please enter a room", "Lobby"));
-  console.log(document.querySelector('#glmolId').getAttribute('websocket').roomId);
 
   var controlPanel = document.getElementById("controlPanel");
   if (location.pathname === "/controller") {
@@ -336,7 +335,7 @@
     this.el.setAttribute('drag-rotate-component', 'enabled', false);
   }
 
-  $('.bottomTab').click(function(evt) {
+  $('.bottomTab').on("mouseup" , function(evt) {
     var height=60;
     var parentId = $(evt.currentTarget).parent().parent()[0].id
     isBig = $(evt.currentTarget).parent().height() > height;
@@ -352,7 +351,7 @@
     }
   })
 
-  $('#glmol01_reload').click(function(ev) {
+  $('#glmol01_reload').on("mouseup", function(ev) {
     var idHeader = "#glmol01_";
     data = {
       'color': $(idHeader + 'color').val(),
@@ -398,7 +397,7 @@
 
   function attributeSetter(type, result){
     document.querySelector('#glmolId').setAttribute('websocket', type, result);
-    document.querySelector('#someSphere').setAttribute('websocket', type, result);
+    //document.querySelector('#someSphere').setAttribute('websocket', type, result);
   }
 
   function download(query) {

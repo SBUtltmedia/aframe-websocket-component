@@ -40,20 +40,25 @@ AFRAME.registerComponent('websocket', {
    * Called once when component is attached. Generally for initial setup.
    */
   init: function(evt) {
+    //Create unique roomId for the DOM element
     window.socketNum = ++window.socketNum || 0;
     this.socketNum = window.socketNum;
     this.data.roomId += window.socketNum.toString();
+    //this.roomId tracks the last value
     this.roomId = this.data.roomId;
-    
+
+    //Create local socket & set room. If the room is not the default,
+    //it will immediately be changed
     this.socket = io();
-    this.sendList = {};
-    this.deltaT = 0;
     this.socket.emit("switchRoom", this.data.roomId);
 
+    //Create necessary variables for tick
+    this.sendList = {};
+    this.deltaT = 0;
     if (this.data.userType == "client") {
       this.socket.on('updateComponents', (attributeList) => {
+        console.log("My userType is:", this.data.userType);
         if (attributeList) {
-          //var elAttributeList = attributeList[this.el.id] || {}
           for (i in attributeList) {
             var currentAttribute = attributeList[i];
             if (currentAttribute != null)
@@ -64,16 +69,32 @@ AFRAME.registerComponent('websocket', {
     }
   },
 
+  /*
+  The following is the data format for our websocket data:
+  Send on socket (roomId)
+  {item a: {attribute1: value1, attribute2: value2, ...},
+   item b: {attribute1: value1, attribute2: value2, ...},
+   ...
+  }
+  */
+
+
   /**
    * Called when component is attached and when component data changes.
    * Generally modifies the entity based on the data.
    */
   update: function(oldData) {
+    //If the roomId has changed, fix it and correct it on the server side
+    console.log("My userType is:", this.data.userType);
     if(this.roomId != this.data.roomId){
       this.data.roomId += this.socketNum.toString();
       this.roomId = this.data.roomId;
+      this.socket.emit("switchRoom", this.data.roomId);
     }
-    this.socket.emit("switchRoom", this.data.roomId);
+    if(this.data.userType == 'controller'){
+      //this.socket.removeListener('updateComponents', ()=>{console.log("Removed.")});
+      this.socket.off('updateComponents');
+    }
   },
 
   /**
@@ -86,6 +107,7 @@ AFRAME.registerComponent('websocket', {
    * Called on each scene tick.
    */
   tick: function(t) {
+    //console.log("My userType is:", this.data.userType);
     if (this.data.userType == "controller") {
       if (t > this.deltaT + this.data.updateFrequency) {  //Update at the chosen frequency
         this.deltaT = t;
